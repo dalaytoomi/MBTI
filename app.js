@@ -274,9 +274,9 @@
     const utter = new SpeechSynthesisUtterance(toSpokenText(text));
     utter.lang = 'zh-CN';
     if (naturalVoice) utter.voice = naturalVoice;
-    utter.rate = 0.98;   // 略快，但不赶
-    utter.pitch = 0.90;  // 更低沉柔和，温暖不尖锐
-    utter.volume = 0.9;  // 音量稍柔
+    utter.rate = 1.08;   // 再加快一档
+    utter.pitch = 0.85;  // 更低柔，温暖不尖
+    utter.volume = 0.85; // 音量再柔一点
     utter.onstart = () => {
       speaking = true;
       pet.dataset.state = 'talking';
