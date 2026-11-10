@@ -411,6 +411,12 @@ body[data-scene="night"] .sunbeams{opacity:0}
   opacity:.92;pointer-events:none;animation:deco-float 9s ease-in-out infinite;
 }
 
+/* ============ 参考资料 ============ */
+.references{margin-top:16px;padding:12px 16px;background:#fff8e4;border:1px dashed #d3b486}
+.refs-title{margin:0 0 6px;font:400 15px/1.4 var(--pixel);color:#4a5c33;letter-spacing:1px}
+.refs-list{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:4px}
+.refs-list li{font-size:11.5px;line-height:1.55;color:#5a4a32;word-break:break-all}
+
 /* ============ 响应式 ============ */
 @media(max-width:1080px){
   .dims{grid-template-columns:repeat(2,minmax(0,1fr))}
