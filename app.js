@@ -199,16 +199,44 @@
     if (voiceOn) speak(petLines[index]);
   });
 
+  /* ---------- 桌宠声音：挑选柔和自然的中文语音 ---------- */
+  let naturalVoice = null;
+  const softVoiceKeywords = ['Mei', 'Ting', 'Xiaoxiao', 'Yunxi', 'Yunjian', 'Yunyang', 'Siri', 'Natural', 'Premium', 'Neural', 'Online', 'Natural Sound'];
+  function pickVoice() {
+    const voices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+    const zh = voices.filter(v => /zh|cmn|Chinese/i.test(v.lang) || /Chinese|中文|普通话/i.test(v.name));
+    if (!zh.length) return null;
+    // 优先柔和/自然音色，避免默认机械音
+    const scored = zh.map(v => {
+      const n = v.name;
+      let s = 0;
+      if (softVoiceKeywords.some(k => n.includes(k))) s += 5;
+      if (/female|女|女音|女声/i.test(n)) s += 2;
+      if (/online|neural|natural|premium/i.test(n)) s += 4;
+      if (/robot|default/i.test(n)) s -= 3;
+      return { v, s };
+    });
+    scored.sort((a, b) => b.s - a.s);
+    return scored[0].v;
+  }
+  if ('speechSynthesis' in window) {
+    naturalVoice = pickVoice();
+    window.speechSynthesis.onvoiceschanged = () => { naturalVoice = pickVoice(); };
+  }
+
   function speak(text) {
     if (!('speechSynthesis' in window)) {
       petStatus.textContent = '当前浏览器不支持语音';
       return;
     }
     window.speechSynthesis.cancel();
+    if (!naturalVoice) naturalVoice = pickVoice();
     const utter = new SpeechSynthesisUtterance(text);
     utter.lang = 'zh-CN';
-    utter.rate = 1.02;
-    utter.pitch = 1.06;
+    if (naturalVoice) utter.voice = naturalVoice;
+    utter.rate = 0.92;   // 稍慢，更柔和
+    utter.pitch = 1.0;   // 保持自然音高，避免尖锐
+    utter.volume = 1;
     utter.onstart = () => {
       speaking = true;
       pet.dataset.state = 'talking';
