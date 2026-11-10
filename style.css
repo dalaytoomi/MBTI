@@ -306,6 +306,13 @@ body[data-scene="night"] .sunbeams{opacity:0}
   display:flex;flex-direction:column;gap:4px;margin-top:6px;
   padding-top:6px;border-top:1px dashed var(--pet-line);
 }
+.pet-sliders[hidden]{display:none}
+.pet-slider-toggle{
+  margin-top:6px;font:400 11px/1 var(--pixel);color:var(--pet-accent);
+  background:var(--paper);border:1px solid var(--pet-line);border-radius:3px;
+  padding:3px 6px;cursor:pointer;
+}
+.pet-slider-toggle:hover{background:#f3e3c1}
 .pet-slider{
   display:flex;align-items:center;gap:6px;font-size:11px;color:var(--pet-accent);
 }

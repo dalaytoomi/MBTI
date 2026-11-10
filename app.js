@@ -254,6 +254,18 @@
     });
   }
 
+  // 调节音色 折叠按钮
+  const sliderToggle = document.getElementById('pet-slider-toggle');
+  const slidersBox = document.getElementById('pet-sliders');
+  if (sliderToggle && slidersBox) {
+    sliderToggle.addEventListener('click', () => {
+      const open = slidersBox.hasAttribute('hidden');
+      slidersBox.toggleAttribute('hidden', !open);
+      sliderToggle.setAttribute('aria-expanded', String(open));
+      sliderToggle.textContent = open ? '收起调节' : '调节音色';
+    });
+  }
+
   // 滑块：实时更新数值显示，松开后试听当前页
   ['rate', 'pitch', 'volume'].forEach(key => {
     const el = document.getElementById('pet-' + key);

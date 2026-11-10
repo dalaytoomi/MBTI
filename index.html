@@ -359,7 +359,8 @@
               </button>
               <select id="pet-voice-select" class="pet-voice-select" aria-label="选择中文语音"></select>
             </div>
-            <div class="pet-sliders">
+            <button id="pet-slider-toggle" class="pet-slider-toggle" aria-expanded="false" aria-controls="pet-sliders">调节音色</button>
+            <div class="pet-sliders" id="pet-sliders" hidden>
               <label class="pet-slider">
                 <span>语速</span>
                 <input type="range" id="pet-rate" min="0.5" max="2" step="0.05" value="1.08">
