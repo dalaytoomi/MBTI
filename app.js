@@ -88,10 +88,12 @@
     if (slide.dataset.scene) setScene(slide.dataset.scene);
 
     petText.textContent = petLines[index] || '';
-    petStatus.textContent = '点桌宠，可以再讲一遍';
+    petStatus.textContent = voiceOn ? '啾啾正在讲解…' : '点桌宠，可以再讲一遍';
     pet.dataset.state = 'idle';
 
     if (speaking) stopSpeak();
+    // 语音开启时，翻页自动朗读本页标题
+    if (voiceOn) speak(petLines[index] || '');
   }
 
   function go(target) {
