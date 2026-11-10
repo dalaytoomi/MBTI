@@ -203,7 +203,7 @@
 
   /* ---------- 桌宠声音：挑选柔和自然的中文语音 ---------- */
   let naturalVoice = null;
-  const softVoiceKeywords = ['Mei', 'Ting', 'Xiaoxiao', 'Yunxi', 'Yunjian', 'Yunyang', 'Siri', 'Natural', 'Premium', 'Neural', 'Online', 'Natural Sound'];
+  const softVoiceKeywords = ['Mei', 'Ting', 'Xiaoxiao', 'Yunxi', 'Yunjian', 'Yunyang', 'Siri', 'Natural', 'Premium', 'Neural', 'Online', 'Natural Sound', 'Google'];
   function pickVoice() {
     const voices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
     const zh = voices.filter(v => /zh|cmn|Chinese/i.test(v.lang) || /Chinese|中文|普通话/i.test(v.name));
@@ -214,8 +214,8 @@
       let s = 0;
       if (softVoiceKeywords.some(k => n.includes(k))) s += 5;
       if (/female|女|女音|女声/i.test(n)) s += 2;
-      if (/online|neural|natural|premium/i.test(n)) s += 4;
-      if (/robot|default/i.test(n)) s -= 3;
+      if (/online|neural|natural|premium|google/i.test(n)) s += 4;
+      if (/robot|default|ting-ting/i.test(n)) s -= 3;   // 旧版 Ting-Ting 较机械
       return { v, s };
     });
     scored.sort((a, b) => b.s - a.s);
@@ -226,6 +226,16 @@
     window.speechSynthesis.onvoiceschanged = () => { naturalVoice = pickVoice(); };
   }
 
+  // 仅用于朗读的文本润色：把 MBTI 等英文缩写换成中文谐音，避免一个字母一个字母地念
+  function toSpokenText(text) {
+    return text
+      .replace(/MBTI/g, '艾姆毕踢艾')
+      .replace(/NT/g, '恩踢')
+      .replace(/NF/g, '恩艾夫')
+      .replace(/SJ/g, '艾斯杰')
+      .replace(/SP/g, '艾斯皮');
+  }
+
   function speak(text) {
     if (!('speechSynthesis' in window)) {
       petStatus.textContent = '当前浏览器不支持语音';
@@ -233,11 +243,11 @@
     }
     window.speechSynthesis.cancel();
     if (!naturalVoice) naturalVoice = pickVoice();
-    const utter = new SpeechSynthesisUtterance(text);
+    const utter = new SpeechSynthesisUtterance(toSpokenText(text));
     utter.lang = 'zh-CN';
     if (naturalVoice) utter.voice = naturalVoice;
-    utter.rate = 0.92;   // 稍慢，更柔和
-    utter.pitch = 1.0;   // 保持自然音高，避免尖锐
+    utter.rate = 0.88;   // 稍慢，更柔和
+    utter.pitch = 0.94;  // 略低音高，温暖不尖锐
     utter.volume = 1;
     utter.onstart = () => {
       speaking = true;
