@@ -244,6 +244,8 @@
     if (naturalVoice) voiceSelect.value = naturalVoice.name;
   }
   populateVoiceSelect();
+  // 某些浏览器语音列表加载较慢，多试几次
+  [400, 1000, 2000].forEach(t => window.setTimeout(populateVoiceSelect, t));
   if (voiceSelect) {
     voiceSelect.addEventListener('change', (e) => {
       const v = window.speechSynthesis.getVoices().find(x => x.name === e.target.value);
