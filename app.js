@@ -254,6 +254,17 @@
     });
   }
 
+  // 滑块：实时更新数值显示，松开后试听当前页
+  ['rate', 'pitch', 'volume'].forEach(key => {
+    const el = document.getElementById('pet-' + key);
+    const val = document.getElementById('pet-' + key + '-val');
+    if (!el) return;
+    el.addEventListener('input', () => { val.textContent = parseFloat(el.value).toFixed(2); });
+    el.addEventListener('change', () => {
+      if (voiceOn) speak(petLines[index] || '');
+    });
+  });
+
   // 仅用于朗读的文本润色：把 MBTI 等英文缩写换成中文谐音，避免一个字母一个字母地念
   function toSpokenText(text) {
     return text
@@ -274,9 +285,10 @@
     const utter = new SpeechSynthesisUtterance(toSpokenText(text));
     utter.lang = 'zh-CN';
     if (naturalVoice) utter.voice = naturalVoice;
-    utter.rate = 1.08;   // 再加快一档
-    utter.pitch = 0.85;  // 更低柔，温暖不尖
-    utter.volume = 0.85; // 音量再柔一点
+    // 从滑块读取实时参数
+    utter.rate = parseFloat(document.getElementById('pet-rate').value) || 1;
+    utter.pitch = parseFloat(document.getElementById('pet-pitch').value) || 1;
+    utter.volume = parseFloat(document.getElementById('pet-volume').value) ?? 1;
     utter.onstart = () => {
       speaking = true;
       pet.dataset.state = 'talking';

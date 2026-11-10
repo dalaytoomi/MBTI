@@ -359,6 +359,23 @@
               </button>
               <select id="pet-voice-select" class="pet-voice-select" aria-label="选择中文语音"></select>
             </div>
+            <div class="pet-sliders">
+              <label class="pet-slider">
+                <span>语速</span>
+                <input type="range" id="pet-rate" min="0.5" max="2" step="0.05" value="1.08">
+                <b id="pet-rate-val">1.08</b>
+              </label>
+              <label class="pet-slider">
+                <span>音调</span>
+                <input type="range" id="pet-pitch" min="0" max="2" step="0.05" value="0.85">
+                <b id="pet-pitch-val">0.85</b>
+              </label>
+              <label class="pet-slider">
+                <span>音量</span>
+                <input type="range" id="pet-volume" min="0" max="1" step="0.05" value="0.85">
+                <b id="pet-volume-val">0.85</b>
+              </label>
+            </div>
             <p id="pet-text" aria-live="polite">MBTI 为什么这么火</p>
             <div class="pet-footnote"><span id="pet-status">点桌宠，可以再念一遍</span><span class="pet-speaking" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div>
           </div>

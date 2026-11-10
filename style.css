@@ -302,6 +302,20 @@ body[data-scene="night"] .sunbeams{opacity:0}
   border:1px solid var(--pet-line);border-radius:3px;padding:2px 3px;cursor:pointer;
   max-width:120px;flex-shrink:0;
 }
+.pet-sliders{
+  display:flex;flex-direction:column;gap:4px;margin-top:6px;
+  padding-top:6px;border-top:1px dashed var(--pet-line);
+}
+.pet-slider{
+  display:flex;align-items:center;gap:6px;font-size:11px;color:var(--pet-accent);
+}
+.pet-slider span{width:28px;flex-shrink:0}
+.pet-slider input[type=range]{
+  flex:1;height:16px;accent-color:#c97b3a;cursor:pointer;
+}
+.pet-slider b{
+  font-weight:400;font-size:10px;color:#9a7a48;min-width:30px;text-align:right;font-variant-numeric:tabular-nums;
+}
 #pet-text{margin:6px 0 0;font:14px/1.7 "Microsoft YaHei","PingFang SC",system-ui,sans-serif;overflow-wrap:anywhere}
 .pet-footnote{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:4px;min-height:12px;color:var(--muted);font-size:10px;line-height:1.2}
 .pet-speaking{display:flex;align-items:center;gap:3px;height:11px;opacity:.4}
