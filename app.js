@@ -223,7 +223,33 @@
   }
   if ('speechSynthesis' in window) {
     naturalVoice = pickVoice();
-    window.speechSynthesis.onvoiceschanged = () => { naturalVoice = pickVoice(); };
+    window.speechSynthesis.onvoiceschanged = () => { naturalVoice = pickVoice(); populateVoiceSelect(); };
+  }
+
+  // 语音下拉框：列出系统所有中文语音，方便现场手动挑一个最自然的
+  const voiceSelect = document.getElementById('pet-voice-select');
+  function populateVoiceSelect() {
+    if (!voiceSelect || !('speechSynthesis' in window)) return;
+    const voices = window.speechSynthesis.getVoices();
+    const zh = voices.filter(v => /zh|cmn|Chinese/i.test(v.lang) || /Chinese|中文|普通话/i.test(v.name));
+    const list = zh.length ? zh : voices;
+    voiceSelect.innerHTML = '';
+    list.forEach((v, i) => {
+      const opt = document.createElement('option');
+      opt.value = v.name;
+      opt.textContent = v.name + (v.default ? '（默认）' : '');
+      voiceSelect.appendChild(opt);
+    });
+    // 默认选中当前自动挑选的音色
+    if (naturalVoice) voiceSelect.value = naturalVoice.name;
+  }
+  populateVoiceSelect();
+  if (voiceSelect) {
+    voiceSelect.addEventListener('change', (e) => {
+      const v = window.speechSynthesis.getVoices().find(x => x.name === e.target.value);
+      if (v) naturalVoice = v;
+      if (voiceOn) speak(petLines[index] || '');
+    });
   }
 
   // 仅用于朗读的文本润色：把 MBTI 等英文缩写换成中文谐音，避免一个字母一个字母地念
