@@ -280,7 +280,7 @@
   // 仅用于朗读的文本润色：把 MBTI 等英文缩写换成中文谐音，避免一个字母一个字母地念
   function toSpokenText(text) {
     return text
-      .replace(/MBTI/g, '艾姆毕踢艾')
+      .replace(/MBTI/g, '哀姆毕踢艾')
       .replace(/NT/g, '恩踢')
       .replace(/NF/g, '恩艾夫')
       .replace(/SJ/g, '艾斯杰')
